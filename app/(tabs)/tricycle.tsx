@@ -106,11 +106,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 20,
-    paddingTop: 50, // space for status bar
-    paddingBottom: 10,
+    paddingTop: 40, // space for status bar
+    paddingBottom: 15,
     backgroundColor: '#fff',
     borderBottomWidth: 1,
-    borderBottomColor: '#eee',
+    borderBottomColor: '#d1d1d1ff',
   },
   logoRow: {
     flexDirection: 'row',

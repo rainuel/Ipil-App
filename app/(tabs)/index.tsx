@@ -1,5 +1,6 @@
 import { useRouter } from 'expo-router';
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
+import Header from '../../components/Header'; // import reusable header
 
 export default function HomeScreen() {
   const router = useRouter();
@@ -8,19 +9,10 @@ export default function HomeScreen() {
     <View style={styles.container}>
 
       {/* HEADER */}
-      <View style={styles.header}>
-        <View style={styles.logoRow}>
-          <Image
-            source={require('../../assets/images/Bayan_ng_Ipil.png')}
-            style={styles.logo}
-          />
-          <Text style={styles.appName}>Ipil Community Hub</Text>
-        </View>
-        <View style={styles.weather}>
-          <Text style={styles.weatherTemp}>🌤 29°C</Text>
-          <Text style={styles.weatherDesc}>Cloudy</Text>
-        </View>
-      </View>
+      <Header />
+
+      {/* DIVIDER */}
+      <View style={styles.divider} />
 
       {/* MAIN CONTENT */}
       <View style={styles.mainContent}>
@@ -52,39 +44,16 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     padding: 20,
-    paddingTop: 50,
   },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 20,
+
+  divider: {
+    height: 1,
+    backgroundColor: '#ccc',
+    marginBottom: 15,
+    alignSelf: 'center',
+    width: '115%',
   },
-  logoRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  logo: {
-    width: 65,
-    height: 65,
-    resizeMode: 'contain',
-    marginRight: 10,
-  },
-  appName: {
-    fontSize: 22,
-    fontWeight: 'bold',
-  },
-  weather: {
-    alignItems: 'flex-end',
-  },
-  weatherTemp: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  weatherDesc: {
-    fontSize: 15,
-    color: 'gray',
-  },
+
   mainContent: {
     flex: 1,
   },
@@ -100,8 +69,8 @@ const styles = StyleSheet.create({
     padding: 16,
     minHeight: 100,
     justifyContent: 'center',
-    elevation: 4, // stronger shadow for Android
-    shadowColor: '#000', // iOS shadow
+    elevation: 4,
+    shadowColor: '#000',
     shadowOpacity: 0.1,
     shadowRadius: 4,
     shadowOffset: { width: 0, height: 2 },

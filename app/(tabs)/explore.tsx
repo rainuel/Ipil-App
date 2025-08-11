@@ -1,23 +1,14 @@
 import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
+import Header from '../../components/Header';
 
 export default function ExploreScreen() {
   return (
-    
     <ScrollView style={styles.container}>
-        {/* HEADER */}
-                <View style={styles.header}>
-                  <View style={styles.logoRow}>
-                    <Image
-                      source={require('../../assets/images/Bayan_ng_Ipil.png')}
-                      style={styles.logo}
-                    />
-                    <Text style={styles.appName}>Ipil Community Hub</Text>
-                  </View>
-                  <View style={styles.weather}>
-                    <Text style={styles.weatherTemp}>🌤 29°C</Text>
-                    <Text style={styles.weatherDesc}>Cloudy</Text>
-                  </View>
-                </View>
+      {/* HEADER */}
+      <Header />
+
+      {/* Divider */}
+      <View style={styles.divider} />
 
       <Text style={styles.title}>Explore Ipil</Text>
 
@@ -48,7 +39,7 @@ export default function ExploreScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 20, backgroundColor: '#fff' },
-  title: { fontSize: 24, fontWeight: 'bold', marginBottom: 15, marginTop: 20, },
+  title: { fontSize: 24, fontWeight: 'bold', marginBottom: 15, marginTop: 3 },
   card: {
     backgroundColor: '#f9f9f9',
     borderRadius: 8,
@@ -59,36 +50,13 @@ const styles = StyleSheet.create({
   cardTitle: { fontSize: 18, fontWeight: 'bold', marginBottom: 5 },
   cardContent: { fontSize: 15, color: '#333', lineHeight: 20 },
 
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 20,
-    marginTop: 30,
+  divider: {
+    height: 1,
+    paddingTop: 1.2,
+    backgroundColor: '#ccc',
+    marginBottom: 15,
+    marginTop: 0,
+    width: '125%', // longer divider
+    alignSelf: 'center',
   },
-  logoRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  logo: {
-    width: 65,
-    height: 65,
-    resizeMode: 'contain',
-    marginRight: 10,
-  },
-  appName: {
-    fontSize: 22,
-    fontWeight: 'bold',
-  },
-  weather: {
-    alignItems: 'flex-end',
-  },
-  weatherTemp: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  weatherDesc: {
-    fontSize: 15,
-    color: 'gray',
-  }
 });
