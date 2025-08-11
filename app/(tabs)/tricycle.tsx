@@ -1,6 +1,6 @@
 import * as Location from 'expo-location';
 import { useEffect, useState } from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { FlatList, Image, StyleSheet, Text, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 
 type Coords = {
@@ -43,7 +43,23 @@ export default function BusScreen() {
 
   return (
     <View style={styles.container}>
-      {/* Map Section */}
+      
+      {/* HEADER */}
+      <View style={styles.header}>
+        <View style={styles.logoRow}>
+          <Image
+            source={require('../../assets/images/Bayan_ng_Ipil.png')}
+            style={styles.logo}
+          />
+          <Text style={styles.appName}>Ipil Community Hub</Text>
+        </View>
+        <View style={styles.weather}>
+          <Text style={styles.weatherTemp}>🌤 29°C</Text>
+          <Text style={styles.weatherDesc}>Cloudy</Text>
+        </View>
+      </View>
+
+      {/* MAP */}
       <View style={styles.mapContainer}>
         <MapView
           style={styles.map}
@@ -61,7 +77,7 @@ export default function BusScreen() {
         </MapView>
       </View>
 
-      {/* Bus Information Section */}
+      {/* BUS INFO */}
       <View style={styles.infoContainer}>
         <Text style={styles.title}>Bus Arrival & Departure</Text>
         {errorMsg && <Text style={{ color: 'red' }}>{errorMsg}</Text>}
@@ -83,15 +99,78 @@ export default function BusScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#fff' },
-  mapContainer: { height: '50%', marginTop: 25},
-  map: { flex: 1 },
-  infoContainer: { flex: 1, padding: 15 },
-  title: { fontSize: 18, fontWeight: 'bold', marginBottom: 10 },
+
+  // HEADER
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingTop: 50, // space for status bar
+    paddingBottom: 10,
+    backgroundColor: '#fff',
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
+  },
+  logoRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  logo: {
+    width: 65,
+    height: 65,
+    resizeMode: 'contain',
+    marginRight: 10,
+  },
+  appName: {
+    fontSize: 22,
+    fontWeight: 'bold',
+  },
+  weather: {
+    alignItems: 'flex-end',
+  },
+  weatherTemp: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  weatherDesc: {
+    fontSize: 15,
+    color: 'gray',
+  },
+
+  // MAP
+  mapContainer: {
+    height: 250,
+    marginHorizontal: 20,
+    marginTop: 15,
+    borderRadius: 10,
+    overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: '#ddd',
+  },
+  map: {
+    width: '100%',
+    height: '100%',
+  },
+
+  // INFO SECTION
+  infoContainer: {
+    flex: 1,
+    paddingHorizontal: 20,
+    paddingTop: 15,
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
   busRow: {
     padding: 10,
     backgroundColor: '#f1f1f1',
     borderRadius: 8,
     marginBottom: 8,
   },
-  route: { fontWeight: 'bold' },
+  route: {
+    fontWeight: 'bold',
+  },
 });
