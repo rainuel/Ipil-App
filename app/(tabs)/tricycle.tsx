@@ -1,7 +1,8 @@
 import * as Location from 'expo-location';
 import { useEffect, useState } from 'react';
-import { FlatList, Image, StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
+import Header from '../../components/Header';
 
 type Coords = {
   latitude: number;
@@ -43,21 +44,8 @@ export default function BusScreen() {
 
   return (
     <View style={styles.container}>
-      
       {/* HEADER */}
-      <View style={styles.header}>
-        <View style={styles.logoRow}>
-          <Image
-            source={require('../../assets/images/Bayan_ng_Ipil.png')}
-            style={styles.logo}
-          />
-          <Text style={styles.appName}>Ipil Community Hub</Text>
-        </View>
-        <View style={styles.weather}>
-          <Text style={styles.weatherTemp}>🌤 29°C</Text>
-          <Text style={styles.weatherDesc}>Cloudy</Text>
-        </View>
-      </View>
+      <Header />
 
       {/* MAP */}
       <View style={styles.mapContainer}>
@@ -98,66 +86,26 @@ export default function BusScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#fff' },
+  container: { flex: 1, backgroundColor: '#fff', padding: 20 },
 
-  // HEADER
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 20,
-    paddingTop: 40, // space for status bar
-    paddingBottom: 15,
-    backgroundColor: '#fff',
-    borderBottomWidth: 1,
-    borderBottomColor: '#d1d1d1ff',
-  },
-  logoRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  logo: {
-    width: 65,
-    height: 65,
-    resizeMode: 'contain',
-    marginRight: 10,
-  },
-  appName: {
-    fontSize: 22,
-    fontWeight: 'bold',
-  },
-  weather: {
-    alignItems: 'flex-end',
-  },
-  weatherTemp: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  weatherDesc: {
-    fontSize: 15,
-    color: 'gray',
-  },
-
-  // MAP
+  // Map
   mapContainer: {
     height: 250,
-    marginHorizontal: 20,
-    marginTop: 15,
     borderRadius: 10,
     overflow: 'hidden',
     borderWidth: 1,
     borderColor: '#ddd',
+    marginBottom: 15,
+    marginTop: 10,
   },
   map: {
     width: '100%',
     height: '100%',
   },
 
-  // INFO SECTION
+  // Info Section
   infoContainer: {
     flex: 1,
-    paddingHorizontal: 20,
-    paddingTop: 15,
   },
   title: {
     fontSize: 18,

@@ -7,9 +7,6 @@ export default function EmergencyScreen() {
       {/* HEADER */}
       <Header />
 
-      {/* DIVIDER */}
-      <View style={styles.divider} />
-
       {/* MAIN CONTENT */}
       <Text style={styles.title}>Emergency Contacts</Text>
       <Text style={styles.label}>Syempre kani tanan wala pa koy contact haha</Text>
@@ -42,12 +39,4 @@ const styles = StyleSheet.create({
   label: { fontSize: 16, fontWeight: 'bold' },
   number: { fontSize: 16, color: '#1976d2' },
 
-  // Lengthened Divider
-  divider: {
-    height: 1.2,
-    backgroundColor: '#ccc',
-    marginBottom: 15,
-    width: '120%',
-    alignSelf: 'center',
-  },
 });

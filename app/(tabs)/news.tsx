@@ -1,5 +1,6 @@
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text } from 'react-native';
 import Header from '../../components/Header';
+import NewsFeed from '../../components/NewsFeed';
 
 export default function NewsScreen() {
   return (
@@ -7,24 +8,10 @@ export default function NewsScreen() {
       {/* HEADER */}
       <Header />
 
-      {/* DIVIDER */}
-      <View style={styles.divider} />
+      <Text style={styles.title}>Latest National News</Text>
 
-      <Text style={styles.title}>Latest News</Text>
-
-      <View style={styles.card}>
-        <Text style={styles.cardTitle}>Electrocution Tragedy in Barangay Tiayon</Text>
-        <Text style={styles.cardContent}>
-          A tragic incident occurred in Barangay Tiayon, Ipil, where a local resident was electrocuted...
-        </Text>
-      </View>
-
-      <View style={styles.card}>
-        <Text style={styles.cardTitle}>Cleanup Drive Announced</Text>
-        <Text style={styles.cardContent}>
-          Barangay officials have scheduled a cleanup drive for the community on Sept 20.
-        </Text>
-      </View>
+      {/* Live News Feed */}
+      <NewsFeed />
     </ScrollView>
   );
 }
@@ -32,23 +19,4 @@ export default function NewsScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 20, backgroundColor: '#fff' },
   title: { fontSize: 28, fontWeight: 'bold', marginBottom: 15, marginTop: 5 },
-  card: {
-    backgroundColor: '#f9f9f9',
-    borderRadius: 8,
-    padding: 16,
-    marginBottom: 15,
-    elevation: 3,
-  },
-  cardTitle: { fontSize: 18, fontWeight: 'bold', marginBottom: 5 },
-  cardContent: { fontSize: 15, lineHeight: 20, color: '#333' },
-
-  divider: {
-    height: 1,
-    paddingTop: 1.2,
-    backgroundColor: '#ccc',
-    marginBottom: 15,
-    marginTop: 0,
-    width: '125%', // longer divider
-    alignSelf: 'center',
-  },
 });

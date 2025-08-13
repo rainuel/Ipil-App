@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "Ipil Community Hub",
+    "name": "Ipil Today!",
     "slug": "Ipil-Application",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/images/Bayan_ng_Ipil.png",
-    "scheme": "Ipil Application",
+    "scheme": "ipil-application",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
@@ -49,6 +49,12 @@
       "eas": {
         "projectId": "7a289d00-de3c-4f6e-bb74-7480fde8f18d"
       }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/7a289d00-de3c-4f6e-bb74-7480fde8f18d"
     }
   }
 }

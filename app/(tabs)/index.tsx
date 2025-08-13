@@ -11,9 +11,6 @@ export default function HomeScreen() {
       {/* HEADER */}
       <Header />
 
-      {/* DIVIDER */}
-      <View style={styles.divider} />
-
       {/* MAIN CONTENT */}
       <View style={styles.mainContent}>
         {/* NEWS PREVIEW */}
@@ -46,16 +43,9 @@ const styles = StyleSheet.create({
     padding: 20,
   },
 
-  divider: {
-    height: 1,
-    backgroundColor: '#ccc',
-    marginBottom: 15,
-    alignSelf: 'center',
-    width: '115%',
-  },
-
   mainContent: {
     flex: 1,
+    paddingTop: 10,
   },
   link: {
     color: '#1976d2',

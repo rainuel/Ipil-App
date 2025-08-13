@@ -7,9 +7,6 @@ export default function ExploreScreen() {
       {/* HEADER */}
       <Header />
 
-      {/* Divider */}
-      <View style={styles.divider} />
-
       <Text style={styles.title}>Explore Ipil</Text>
 
       <View style={styles.card}>
@@ -49,14 +46,4 @@ const styles = StyleSheet.create({
   image: { width: '100%', height: 150, borderRadius: 8, marginBottom: 10 },
   cardTitle: { fontSize: 18, fontWeight: 'bold', marginBottom: 5 },
   cardContent: { fontSize: 15, color: '#333', lineHeight: 20 },
-
-  divider: {
-    height: 1,
-    paddingTop: 1.2,
-    backgroundColor: '#ccc',
-    marginBottom: 15,
-    marginTop: 0,
-    width: '125%', // longer divider
-    alignSelf: 'center',
-  },
 });
