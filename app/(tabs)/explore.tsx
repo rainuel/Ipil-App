@@ -9,25 +9,32 @@ export default function ExploreScreen() {
 
       <Text style={styles.title}>Explore Ipil</Text>
 
+      {/* Provincial Capitol */}
       <View style={styles.card}>
         <Image
-          source={{ uri: 'https://example.com/place.jpg' }}
+          source={require('../../assets/images/capitol.jpg')}
           style={styles.image}
         />
-        <Text style={styles.cardTitle}>Ipil Plaza</Text>
+        <Text style={styles.cardTitle}>
+          Zamboanga Sibugay Provincial Capitol
+        </Text>
         <Text style={styles.cardContent}>
-          The central park of Ipil, a place where locals gather for events and leisure.
+          The Zamboanga Sibugay Capitol combines modern and traditional Filipino
+          architecture, with a symmetrical façade, gable roofs, and landscaped
+          grounds that highlight the province's cultural heritage.
         </Text>
       </View>
 
+      {/* Rotunda Obelisk */}
       <View style={styles.card}>
         <Image
-          source={{ uri: 'https://example.com/food.jpg' }}
+          source={require('../../assets/images/rotunda.jpg')}
           style={styles.image}
         />
-        <Text style={styles.cardTitle}>Local Delicacies</Text>
+        <Text style={styles.cardTitle}>Ipil Rotunda Obelisk</Text>
         <Text style={styles.cardContent}>
-          Enjoy fresh seafood and traditional Zamboanga Sibugay dishes.
+          A symbolic landmark of Zamboanga Sibugay, the Rotunda Obelisk stands
+          as a tribute to the province’s history, unity, and cultural identity.
         </Text>
       </View>
     </ScrollView>
@@ -35,15 +42,46 @@ export default function ExploreScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20, backgroundColor: '#fff' },
-  title: { fontSize: 24, fontWeight: 'bold', marginBottom: 15, marginTop: 3 },
-  card: {
-    backgroundColor: '#f9f9f9',
-    borderRadius: 8,
-    padding: 16,
-    marginBottom: 15,
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#fff',
   },
-  image: { width: '100%', height: 150, borderRadius: 8, marginBottom: 10 },
-  cardTitle: { fontSize: 18, fontWeight: 'bold', marginBottom: 5 },
-  cardContent: { fontSize: 15, color: '#333', lineHeight: 20 },
+  title: {
+    fontSize: 26,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    marginTop: 10,
+    textAlign: 'center',
+    color: '#222',
+  },
+  card: {
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 20,
+    elevation: 3, // shadow for Android
+    shadowColor: '#000', // shadow for iOS
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+  },
+  image: {
+    width: '100%',
+    height: 180,
+    borderRadius: 10,
+    marginBottom: 12,
+  },
+  cardTitle: {
+    fontSize: 20,
+    fontWeight: '600',
+    marginBottom: 6,
+    color: '#333',
+  },
+  cardContent: {
+    fontSize: 15,
+    color: '#555',
+    lineHeight: 22,
+    textAlign: 'justify',
+  },
 });

@@ -3,7 +3,7 @@
     "name": "Ipil Today!",
     "slug": "Ipil-Application",
     "runtimeVersion": "1.0.1",
-    "version": "1.0.0.1",
+    "version": "1.0.0.2",
     "orientation": "portrait",
     "icon": "./assets/images/IPIL_INITIAL_LOGO.png",
     "scheme": "ipil-application",
@@ -18,7 +18,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/Bayan_ng_Ipil.png",
+        "foregroundImage": "./assets/images/IPIL_INITIAL_LOGO.png",
         "backgroundColor": "#ffffff",
         "buildType": "apk"
       },

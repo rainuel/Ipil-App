@@ -1,10 +1,48 @@
-import { Stack } from "expo-router";
+import { Ionicons } from '@expo/vector-icons';
+import { Drawer } from 'expo-router/drawer';
 
 export default function RootLayout() {
   return (
-    <Stack screenOptions={{ headerShown: false }}>
-      {/* clean-up purposes */}
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-    </Stack>
+    <Drawer
+      screenOptions={{
+        headerShown: true,
+        drawerActiveTintColor: 'tomato',
+        drawerInactiveTintColor: 'gray',
+        drawerLabelStyle: { fontSize: 16 },
+      }}
+    >
+      {/* Main Tabs */}
+      <Drawer.Screen
+        name="(tabs)"
+        options={{
+          title: 'Home',
+          drawerIcon: ({ color, size }) => (
+            <Ionicons name="home-outline" size={size} color={color} />
+          ),
+        }}
+      />
+
+      {/* About Screen */}
+      <Drawer.Screen
+        name="about"
+        options={{
+          title: 'About',
+          drawerIcon: ({ color, size }) => (
+            <Ionicons name="information-circle-outline" size={size} color={color} />
+          ),
+        }}
+      />
+
+      {/* Settings Screen */}
+      <Drawer.Screen
+        name="settings"
+        options={{
+          title: 'Settings',
+          drawerIcon: ({ color, size }) => (
+            <Ionicons name="settings-outline" size={size} color={color} />
+          ),
+        }}
+      />
+    </Drawer>
   );
 }

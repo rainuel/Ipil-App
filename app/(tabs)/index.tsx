@@ -1,6 +1,16 @@
 import { useRouter } from 'expo-router';
-import { useEffect, useState } from 'react';
-import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { useEffect, useRef, useState } from 'react';
+import {
+  ActivityIndicator,
+  Animated,
+  Easing,
+  Image,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import Header from '../../components/Header';
 
 type Article = {
@@ -14,6 +24,10 @@ export default function HomeScreen() {
   const [latestNews, setLatestNews] = useState<Article | null>(null);
   const [loading, setLoading] = useState(true);
 
+  // Animation refs
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const slideAnim = useRef(new Animated.Value(30)).current;
+
   useEffect(() => {
     const fetchLatestNews = async () => {
       try {
@@ -22,7 +36,7 @@ export default function HomeScreen() {
         );
         const data = await res.json();
         if (data.results && data.results.length > 0) {
-          setLatestNews(data.results[0]); // only first article
+          setLatestNews(data.results[0]);
         }
       } catch (err) {
         console.error('Error fetching latest news:', err);
@@ -32,19 +46,41 @@ export default function HomeScreen() {
     };
 
     fetchLatestNews();
+
+    // Fade and slide animation for the whole content
+    Animated.parallel([
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 700,
+        easing: Easing.ease,
+        useNativeDriver: true,
+      }),
+      Animated.timing(slideAnim, {
+        toValue: 0,
+        duration: 700,
+        easing: Easing.out(Easing.ease),
+        useNativeDriver: true,
+      }),
+    ]).start();
   }, []);
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       {/* HEADER */}
       <Header />
 
-      <View style={styles.mainContent}>
+      {/* MAIN CONTENT */}
+      <Animated.View
+        style={[
+          styles.mainContent,
+          { opacity: fadeAnim, transform: [{ translateY: slideAnim }] },
+        ]}
+      >
         {/* LATEST NATIONAL NEWS */}
         <View style={styles.card}>
-          <Text style={styles.cardTitle}>Latest National News</Text>
+          <Text style={styles.cardTitle}>📰 Latest National News</Text>
           {loading ? (
-            <ActivityIndicator size="small" color="#000" />
+            <ActivityIndicator size="small" color="#1976d2" />
           ) : latestNews ? (
             <>
               <Text style={styles.cardContent}>
@@ -53,7 +89,7 @@ export default function HomeScreen() {
                   : latestNews.title}
               </Text>
               <Pressable onPress={() => router.push('/news')}>
-                <Text style={styles.link}>Read more</Text>
+                <Text style={styles.link}>Read more →</Text>
               </Pressable>
             </>
           ) : (
@@ -63,29 +99,73 @@ export default function HomeScreen() {
 
         {/* UPCOMING EVENTS */}
         <View style={styles.card}>
-          <Text style={styles.cardTitle}>Upcoming Events</Text>
-          <Text style={styles.cardContent}>Arrival of Germany – Sept 3</Text>
-          <Text style={styles.cardContent}>Departure for Dumaguete – Sept 13-15</Text>
-          <Text style={styles.cardContent}>Barangay Cleanup Drive – Sept 20</Text>
+          <Text style={styles.cardTitle}>📅 Upcoming Events</Text>
+          <View style={styles.eventItem}>
+            <Text style={styles.eventBullet}>•</Text>
+            <Text style={styles.cardContent}>Arrival of Germany – Sept 3</Text>
+          </View>
+          <View style={styles.eventItem}>
+            <Text style={styles.eventBullet}>•</Text>
+            <Text style={styles.cardContent}>Departure for Dumaguete – Sept 13-15</Text>
+          </View>
+          <View style={styles.eventItem}>
+            <Text style={styles.eventBullet}>•</Text>
+            <Text style={styles.cardContent}>Barangay Cleanup Drive – Sept 20</Text>
+          </View>
         </View>
 
         {/* EXPLORE SECTION */}
-        <Pressable style={styles.card} onPress={() => router.push('/explore')}>
-          <Text style={styles.cardTitle}>Explore</Text>
-          <Text style={styles.cardContent}>
-            Discover more about our community and nearby places.
-          </Text>
-          <Text style={styles.link}>Go to Explore</Text>
-        </Pressable>
-      </View>
+        <View style={styles.sectionHeader}>
+          <Text style={styles.cardTitle}>🌏 Explore</Text>
+          <Pressable onPress={() => router.push('/explore')}>
+            <Text style={styles.link}>See all →</Text>
+          </Pressable>
+        </View>
+
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{ paddingRight: 20 }}
+        >
+          {exploreItems.map((item, index) => (
+            <Pressable
+              key={index}
+              style={styles.exploreCard}
+              onPress={() => router.push('/explore')}
+            >
+              <Image
+                source={item.image}
+                style={styles.exploreImage}
+                resizeMode="cover"
+              />
+              <Text style={styles.exploreText}>{item.title}</Text>
+            </Pressable>
+          ))}
+        </ScrollView>
+      </Animated.View>
     </ScrollView>
   );
 }
 
+const exploreItems = [
+  {
+    title: 'Provincial Capitol',
+    image: require('../../assets/images/capitol.jpg'),
+  },
+  {
+    title: 'Rotunda Obelisk',
+    image: require('../../assets/images/rotunda.jpg'),
+  },
+  {
+    title: 'Local Delicacies',
+    image: { uri: 'https://via.placeholder.com/300' },
+  },
+];
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#fefefe',
     padding: 20,
   },
   mainContent: {
@@ -94,31 +174,68 @@ const styles = StyleSheet.create({
   },
   link: {
     color: '#1976d2',
-    fontWeight: 'bold',
-    textDecorationLine: 'underline',
+    fontWeight: '600',
     marginTop: 8,
   },
   card: {
-    backgroundColor: '#f9f9f9',
-    borderRadius: 8,
+    backgroundColor: '#fff',
+    borderRadius: 14,
     padding: 16,
-    minHeight: 100,
-    justifyContent: 'center',
+    marginBottom: 18,
     elevation: 4,
     shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    shadowOffset: { width: 0, height: 2 },
-    marginBottom: 15,
+    shadowOpacity: 0.06,
+    shadowRadius: 6,
+    shadowOffset: { width: 0, height: 3 },
   },
   cardTitle: {
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 8,
+    color: '#222',
   },
   cardContent: {
     fontSize: 15,
-    color: '#333',
+    color: '#444',
     lineHeight: 20,
+  },
+  sectionHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 8,
+    marginTop: 10,
+  },
+  exploreCard: {
+    width: 160,
+    marginRight: 14,
+    borderRadius: 14,
+    overflow: 'hidden',
+    backgroundColor: '#fff',
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOpacity: 0.06,
+    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 2 },
+  },
+  exploreImage: {
+    width: '100%',
+    height: 110,
+  },
+  exploreText: {
+    padding: 10,
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#222',
+  },
+  eventItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 4,
+  },
+  eventBullet: {
+    color: '#1976d2',
+    fontSize: 18,
+    marginRight: 6,
   },
 });
