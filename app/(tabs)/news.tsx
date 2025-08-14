@@ -1,18 +1,18 @@
-import { ScrollView, StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import Header from '../../components/Header';
 import NewsFeed from '../../components/NewsFeed';
 
 export default function NewsScreen() {
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       {/* HEADER */}
       <Header />
 
       <Text style={styles.title}>Latest National News</Text>
 
-      {/* Live News Feed */}
+      {/* Live News Feed handles its own scroll & refresh */}
       <NewsFeed />
-    </ScrollView>
+    </View>
   );
 }
 

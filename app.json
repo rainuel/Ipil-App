@@ -2,19 +2,25 @@
   "expo": {
     "name": "Ipil Today!",
     "slug": "Ipil-Application",
-    "version": "1.0.1",
+    "runtimeVersion": "1.0.1",
+    "version": "1.0.0.1",
     "orientation": "portrait",
-    "icon": "./assets/images/Bayan_ng_Ipil.png",
+    "icon": "./assets/images/IPIL_INITIAL_LOGO.png",
     "scheme": "ipil-application",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.rainuel.IpilApplication",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/Bayan_ng_Ipil.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#ffffff",
+        "buildType": "apk"
       },
       "edgeToEdgeEnabled": true,
       "config": {
@@ -27,14 +33,14 @@
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/Bayan_ng_Ipil.png"
+      "favicon": "./assets/images/IPIL_INITIAL_LOGO.png"
     },
     "plugins": [
       "expo-router",
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/Bayan_ng_Ipil.png",
+          "image": "./assets/images/IPIL_INITIAL_LOGO.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
@@ -49,9 +55,6 @@
       "eas": {
         "projectId": "7a289d00-de3c-4f6e-bb74-7480fde8f18d"
       }
-    },
-    "runtimeVersion": {
-      "policy": "appVersion"
     },
     "updates": {
       "url": "https://u.expo.dev/7a289d00-de3c-4f6e-bb74-7480fde8f18d"
