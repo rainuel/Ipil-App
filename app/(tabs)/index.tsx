@@ -12,6 +12,7 @@ import {
   View,
 } from 'react-native';
 import Header from '../../components/Header';
+import Menu from '../../components/Menu';
 
 type Article = {
   title: string;
@@ -21,6 +22,7 @@ type Article = {
 
 export default function HomeScreen() {
   const router = useRouter();
+  const [showDrawer, setShowDrawer] = useState(false);
   const [latestNews, setLatestNews] = useState<Article | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -67,7 +69,10 @@ export default function HomeScreen() {
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       {/* HEADER */}
-      <Header />
+      <Header onDrawerPress={() => setShowDrawer(true)} />
+
+      {/* Drawer Menu */}
+      {showDrawer && <Menu onClose={() => setShowDrawer(false)} />}
 
       {/* MAIN CONTENT */}
       <Animated.View
@@ -107,6 +112,26 @@ export default function HomeScreen() {
           <View style={styles.eventItem}>
             <Text style={styles.eventBullet}>•</Text>
             <Text style={styles.cardContent}>Departure for Dumaguete – Sept 13-15</Text>
+          </View>
+          <View style={styles.eventItem}>
+            <Text style={styles.eventBullet}>•</Text>
+            <Text style={styles.cardContent}>Barangay Cleanup Drive – Sept 20</Text>
+          </View>
+          <View style={styles.eventItem}>
+            <Text style={styles.eventBullet}>•</Text>
+            <Text style={styles.cardContent}>Barangay Cleanup Drive – Sept 20</Text>
+          </View>
+          <View style={styles.eventItem}>
+            <Text style={styles.eventBullet}>•</Text>
+            <Text style={styles.cardContent}>Barangay Cleanup Drive – Sept 20</Text>
+          </View>
+          <View style={styles.eventItem}>
+            <Text style={styles.eventBullet}>•</Text>
+            <Text style={styles.cardContent}>Barangay Cleanup Drive – Sept 20</Text>
+          </View>
+          <View style={styles.eventItem}>
+            <Text style={styles.eventBullet}>•</Text>
+            <Text style={styles.cardContent}>Barangay Cleanup Drive – Sept 20</Text>
           </View>
           <View style={styles.eventItem}>
             <Text style={styles.eventBullet}>•</Text>
@@ -209,13 +234,13 @@ const styles = StyleSheet.create({
   exploreCard: {
     width: 160,
     marginRight: 14,
-    borderRadius: 14,
+    borderRadius: 10,
     overflow: 'hidden',
     backgroundColor: '#fff',
     elevation: 3,
     shadowColor: '#000',
     shadowOpacity: 0.06,
-    shadowRadius: 4,
+    shadowRadius: 14,
     shadowOffset: { width: 0, height: 2 },
   },
   exploreImage: {

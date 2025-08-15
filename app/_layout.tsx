@@ -5,7 +5,7 @@ export default function RootLayout() {
   return (
     <Drawer
       screenOptions={{
-        headerShown: true,
+        headerShown: false,
         drawerActiveTintColor: 'tomato',
         drawerInactiveTintColor: 'gray',
         drawerLabelStyle: { fontSize: 16 },

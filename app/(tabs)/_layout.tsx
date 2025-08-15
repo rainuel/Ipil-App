@@ -15,8 +15,6 @@ export default function Layout() {
             iconName = "newspaper-outline";
           } else if (route.name === "emergency") {
             iconName = "call-outline";
-          } else if (route.name === "tricycle") {
-            iconName = "bicycle-outline";
           } else if (route.name === "explore") {
             iconName = "compass-outline";
           }
@@ -30,7 +28,6 @@ export default function Layout() {
       <Tabs.Screen name="index" options={{ title: "Home" }} />
       <Tabs.Screen name="news" options={{ title: "News" }} />
       <Tabs.Screen name="emergency" options={{ title: "Emergency" }} />
-      <Tabs.Screen name="tricycle" options={{ title: "Transportation" }} />
       <Tabs.Screen name="explore" options={{ title: "Explore" }} />
     </Tabs>
   );

@@ -12,9 +12,9 @@ export default function AboutScreen() {
       </TouchableOpacity>
 
       {/* Page Content */}
-      <Text style={styles.title}>About This App</Text>
+      <Text style={styles.title}>Setup Appointments with the Mayor's Office.</Text>
       <Text style={styles.text}>
-        This app was created by PUNDEMONIUM.Co to serve the Ipil community.
+        Coming soon!
       </Text>
     </View>
   );

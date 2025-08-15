@@ -2,7 +2,8 @@ import * as Location from 'expo-location';
 import { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
-import Header from '../../components/Header';
+import Header from '../components/Header';
+import Menu from '../components/Menu';
 
 type Coords = {
   latitude: number;
@@ -10,15 +11,16 @@ type Coords = {
 };
 
 export default function BusScreen() {
+  const [showDrawer, setShowDrawer] = useState(false);
+  const [location, setLocation] = useState<Coords | null>(null);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+
   const ipilCoords = {
     latitude: 7.7833,
     longitude: 122.5833,
     latitudeDelta: 0.05,
     longitudeDelta: 0.05,
   };
-
-  const [location, setLocation] = useState<Coords | null>(null);
-  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   useEffect(() => {
     (async () => {
@@ -45,7 +47,10 @@ export default function BusScreen() {
   return (
     <View style={styles.container}>
       {/* HEADER */}
-      <Header />
+      <Header onDrawerPress={() => setShowDrawer(true)} />
+
+      {/* Drawer Menu */}
+      {showDrawer && <Menu onClose={() => setShowDrawer(false)} />}
 
       {/* MAP */}
       <View style={styles.mapContainer}>

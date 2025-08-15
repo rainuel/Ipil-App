@@ -1,33 +1,39 @@
+import { Ionicons } from '@expo/vector-icons';
 import * as Location from 'expo-location';
 import { useEffect, useState } from 'react';
-import { ActivityIndicator, Image, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 type WeatherData = {
   temp: number;
-  description: string;
-  icon: string;
+  icon: string; // OpenWeather icon code, e.g., "01d"
 };
 
-export default function Header() {
+type HeaderProps = {
+  onDrawerPress: () => void;
+};
+
+export default function Header({ onDrawerPress }: HeaderProps) {
   const [weather, setWeather] = useState<WeatherData | null>(null);
-  const [loading, setLoading] = useState(true); // ✅ Added loading state
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchWeather = async () => {
       try {
-        setLoading(true); // ✅ Start loading
+        setLoading(true);
 
-        const API_KEY = '95c9f3003a88ce79581c5d85b122dfe0';
         let LAT = 7.7833;
         let LON = 122.5833;
 
-        let { status } = await Location.requestForegroundPermissionsAsync();
+        // Request location permission
+        const { status } = await Location.requestForegroundPermissionsAsync();
         if (status === 'granted') {
-          let location = await Location.getCurrentPositionAsync({});
+          const location = await Location.getCurrentPositionAsync({});
           LAT = location.coords.latitude;
           LON = location.coords.longitude;
         }
 
+        // Fetch weather
+        const API_KEY = '95c9f3003a88ce79581c5d85b122dfe0';
         const res = await fetch(
           `https://api.openweathermap.org/data/2.5/weather?lat=${LAT}&lon=${LON}&appid=95c9f3003a88ce79581c5d85b122dfe0&units=metric`
         );
@@ -36,26 +42,25 @@ export default function Header() {
         if (data?.main?.temp && data?.weather?.[0]) {
           setWeather({
             temp: Math.round(data.main.temp),
-            description:
-              data.weather[0].description.charAt(0).toUpperCase() +
-              data.weather[0].description.slice(1).replace(' clouds', ''),
             icon: data.weather[0].icon,
           });
         }
       } catch (err) {
         console.error('Error fetching weather:', err);
       } finally {
-        setLoading(false); // ✅ Stop loading
+        setLoading(false);
       }
     };
 
     fetchWeather();
-    const interval = setInterval(fetchWeather, 10 * 60 * 1000);
+
+    const interval = setInterval(fetchWeather, 10 * 60 * 1000); // refresh every 10 minutes
     return () => clearInterval(interval);
   }, []);
 
   return (
     <View style={styles.header}>
+      {/* Left: Logo + App Name */}
       <View style={styles.logoRow}>
         <Image
           source={require('../assets/images/Bayan_ng_Ipil.png')}
@@ -64,25 +69,26 @@ export default function Header() {
         <Text style={styles.appName}>Ipil Today!</Text>
       </View>
 
-      {/* ✅ Show loading indicator or weather */}
-      {loading ? (
-        <ActivityIndicator size="small" color="#555" />
-      ) : (
-        weather && (
-          <View style={styles.weatherRow}>
-            <Image
-              source={{
-                uri: `https://openweathermap.org/img/wn/${weather.icon}@2x.png`,
-              }}
-              style={styles.weatherIcon}
-            />
-            <View>
+      {/* Right: Weather + Drawer */}
+      <View style={styles.rightRow}>
+        {loading ? (
+          <ActivityIndicator size="small" color="#555" style={{ marginRight: 10 }} />
+        ) : (
+          weather && (
+            <View style={styles.weatherRow}>
+              <Image
+                source={{ uri: `https://openweathermap.org/img/wn/${weather.icon}@2x.png` }}
+                style={styles.weatherIcon}
+              />
               <Text style={styles.weatherTemp}>{weather.temp}°C</Text>
-              <Text style={styles.weatherDesc}>{weather.description}</Text>
             </View>
-          </View>
-        )
-      )}
+          )
+        )}
+
+        <TouchableOpacity onPress={onDrawerPress} style={styles.drawerButton}>
+          <Ionicons name="menu" size={28} color="#000" />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -92,17 +98,48 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingBottom: 15,
-    paddingTop: 15,
+    paddingVertical: 15,
+    paddingHorizontal: 15,
     backgroundColor: '#fff',
     borderBottomWidth: 1,
-    borderBottomColor: '#d1d1d1ff',
+    borderBottomColor: '#ddd',
+    zIndex: 10,
   },
-  logoRow: { flexDirection: 'row', alignItems: 'center' },
-  logo: { width: 45, height: 45, resizeMode: 'contain', marginRight: 10 },
-  appName: { fontSize: 20, fontWeight: 'bold' },
-  weatherRow: { flexDirection: 'row', alignItems: 'center' },
-  weatherTemp: { fontSize: 18, fontWeight: 'bold', color: '#000' },
-  weatherDesc: { fontSize: 14, color: '#555' },
-  weatherIcon: { width: 40, height: 40, marginRight: 6 },
+  logoRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  logo: {
+    width: 45,
+    height: 45,
+    resizeMode: 'contain',
+    marginRight: 10,
+  },
+  appName: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#222',
+  },
+  rightRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  weatherRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginRight: 10,
+  },
+  weatherIcon: {
+    width: 40,
+    height: 40,
+    marginRight: 5,
+  },
+  weatherTemp: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#222',
+  },
+  drawerButton: {
+    padding: 5,
+  },
 });
