@@ -1,48 +1,38 @@
-import * as Location from 'expo-location';
-import { useEffect, useState } from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
+import { Ionicons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
+import { useState } from 'react';
+import {
+  FlatList,
+  LayoutAnimation,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  UIManager,
+  View,
+} from 'react-native';
 import Header from '../components/Header';
 import Menu from '../components/Menu';
 
-type Coords = {
-  latitude: number;
-  longitude: number;
-};
+if (Platform.OS === 'android') {
+  UIManager.setLayoutAnimationEnabledExperimental?.(true);
+}
 
 export default function BusScreen() {
   const [showDrawer, setShowDrawer] = useState(false);
-  const [location, setLocation] = useState<Coords | null>(null);
-  const [errorMsg, setErrorMsg] = useState<string | null>(null);
-
-  const ipilCoords = {
-    latitude: 7.7833,
-    longitude: 122.5833,
-    latitudeDelta: 0.05,
-    longitudeDelta: 0.05,
-  };
-
-  useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
-        return;
-      }
-
-      let loc = await Location.getCurrentPositionAsync({});
-      setLocation({
-        latitude: loc.coords.latitude,
-        longitude: loc.coords.longitude,
-      });
-    })();
-  }, []);
+  const [expandedId, setExpandedId] = useState<string | null>(null);
+  const router = useRouter();
 
   const busData = [
-    { id: '1', route: 'Zamboanga', arrival: '5 mins', departure: '10 mins' },
-    { id: '2', route: 'Dipolog', arrival: '12 mins', departure: '15 mins' },
-    { id: '3', route: 'Pagadian', arrival: '20 mins', departure: '25 mins' },
+    { id: '1', route: 'Zamboanga', arrival: '5 mins', departure: '10 mins', details: 'Air-conditioned • ₱250 fare • ETA 3hrs' },
+    { id: '2', route: 'Dipolog', arrival: '12 mins', departure: '15 mins', details: 'Regular • ₱180 fare • ETA 2.5hrs' },
+    { id: '3', route: 'Pagadian', arrival: '20 mins', departure: '25 mins', details: 'Deluxe • ₱220 fare • ETA 2hrs' },
   ];
+
+  const toggleExpand = (id: string) => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    setExpandedId(expandedId === id ? null : id);
+  };
 
   return (
     <View style={styles.container}>
@@ -52,39 +42,59 @@ export default function BusScreen() {
       {/* Drawer Menu */}
       {showDrawer && <Menu onClose={() => setShowDrawer(false)} />}
 
-      {/* MAP */}
-      <View style={styles.mapContainer}>
-        <MapView
-          style={styles.map}
-          initialRegion={ipilCoords}
-          showsUserLocation={true}
-        >
-          <Marker coordinate={ipilCoords} title="Ipil, Zamboanga Sibugay" />
-          {location && (
-            <Marker
-              coordinate={location}
-              pinColor="blue"
-              title="Your Location"
-            />
-          )}
-        </MapView>
-      </View>
-
       {/* BUS INFO */}
       <View style={styles.infoContainer}>
         <Text style={styles.title}>Bus Arrival & Departure</Text>
-        {errorMsg && <Text style={{ color: 'red' }}>{errorMsg}</Text>}
+
         <FlatList
           data={busData}
           keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <View style={styles.busRow}>
-              <Text style={styles.route}>{item.route}</Text>
-              <Text>Arrives in: {item.arrival}</Text>
-              <Text>Departs in: {item.departure}</Text>
-            </View>
-          )}
+          renderItem={({ item }) => {
+            const expanded = expandedId === item.id;
+            return (
+              <TouchableOpacity
+                onPress={() => toggleExpand(item.id)}
+                activeOpacity={0.8}
+              >
+                <View style={[styles.busRow, expanded && styles.expandedRow]}>
+                  {/* Top Row */}
+                  <View style={styles.rowHeader}>
+                    <View style={styles.routeRow}>
+                      <Ionicons name="bus-outline" size={20} color="#007bff" />
+                      <Text style={styles.route}>{item.route}</Text>
+                    </View>
+                    <View style={styles.timeRow}>
+                      <Ionicons name="time-outline" size={18} color="#28a745" />
+                      <Text style={styles.timeText}>Arrives: {item.arrival}</Text>
+                    </View>
+                    <View style={styles.timeRow}>
+                      <Ionicons name="exit-outline" size={18} color="#dc3545" />
+                      <Text style={styles.timeText}>Departs: {item.departure}</Text>
+                    </View>
+                  </View>
+
+                  {/* Expanded Details */}
+                  {expanded && (
+                    <View style={styles.details}>
+                      <Ionicons name="information-circle-outline" size={18} color="#6c757d" />
+                      <Text style={styles.detailsText}>{item.details}</Text>
+                    </View>
+                  )}
+                </View>
+              </TouchableOpacity>
+            );
+          }}
         />
+
+        {/* Sleek Back to Home Button */}
+        <TouchableOpacity
+          style={styles.homeButton}
+          onPress={() => router.push('/')}
+          activeOpacity={0.8}
+        >
+          <Ionicons name="home-outline" size={20} color="white" />
+          <Text style={styles.homeButtonText}>Home</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -92,38 +102,55 @@ export default function BusScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#fff', padding: 20 },
-
-  // Map
-  mapContainer: {
-    height: 250,
-    borderRadius: 10,
-    overflow: 'hidden',
-    borderWidth: 1,
-    borderColor: '#ddd',
-    marginBottom: 15,
-    marginTop: 10,
-  },
-  map: {
-    width: '100%',
-    height: '100%',
-  },
-
-  // Info Section
-  infoContainer: {
-    flex: 1,
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
+  infoContainer: { flex: 1 },
+  title: { fontSize: 20, fontWeight: 'bold', marginBottom: 15, color: '#333', marginTop: 10 },
   busRow: {
-    padding: 10,
-    backgroundColor: '#f1f1f1',
-    borderRadius: 8,
-    marginBottom: 8,
+    padding: 14,
+    backgroundColor: '#f8f9fa',
+    borderRadius: 12,
+    marginBottom: 12,
+    borderWidth: 1,
+    borderColor: '#eee',
+    shadowColor: '#000',
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
+    elevation: 2,
   },
-  route: {
+  expandedRow: {
+    backgroundColor: '#eaf4ff',
+    borderColor: '#007bff',
+  },
+  rowHeader: { marginBottom: 5 },
+  routeRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 6 },
+  route: { fontWeight: 'bold', fontSize: 16, marginLeft: 6, color: '#007bff' },
+  timeRow: { flexDirection: 'row', alignItems: 'center', marginVertical: 2 },
+  timeText: { fontSize: 14, marginLeft: 6, color: '#444' },
+  details: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 10,
+    paddingTop: 8,
+    borderTopWidth: 1,
+    borderTopColor: '#ddd',
+  },
+  detailsText: { fontSize: 14, marginLeft: 6, color: '#555' },
+
+  /* Home button */
+  homeButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'grey',
+    paddingVertical: 12,
+    borderRadius: 25,
+    marginTop: 20,
+    alignSelf: 'center',
+    width: 150,
+  },
+  homeButtonText: {
+    color: 'white',
     fontWeight: 'bold',
+    marginLeft: 8,
+    fontSize: 16,
   },
 });

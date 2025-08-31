@@ -6,6 +6,7 @@ export default function RootLayout() {
     <Drawer
       screenOptions={{
         headerShown: false,
+        swipeEnabled: false, // 👈 disables swipe-to-open drawer
         drawerActiveTintColor: 'tomato',
         drawerInactiveTintColor: 'gray',
         drawerLabelStyle: { fontSize: 16 },

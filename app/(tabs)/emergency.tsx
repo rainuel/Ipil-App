@@ -1,5 +1,6 @@
+import * as Clipboard from 'expo-clipboard';
 import { useEffect, useRef, useState } from 'react';
-import { Animated, Image, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Alert, Animated, Image, Linking, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Header from '../../components/Header';
 import Menu from '../../components/Menu';
 
@@ -28,29 +29,41 @@ export default function EmergencyScreen() {
   const contacts = [
     {
       name: 'Police Department',
-      number: '+63 917-123-4567',
+      number: '+63 977-849-0091',
       address: 'Ipil Police Station, Ipil, Zamboanga Sibugay',
       logo: require('../../assets/images/police_logo.png'),
     },
     {
-      name: 'Fire Department',
-      number: '+63 912-345-6789',
+      name: 'Ipil Municipal Fire Station',
+      number: '+63 953-839-5673',
       address: 'Ipil Fire Station, Ipil, Zamboanga Sibugay',
       logo: require('../../assets/images/bfp_logo.png'),
     },
     {
-      name: 'Health Department',
-      number: '(062) 333-1234',
-      address: 'Ipil District Hospital, Ipil, Zamboanga Sibugay',
-      logo: require('../../assets/images/health_logo.jpg'),
+      name: 'GTH Medical Center',
+      number: '+63 965-427-7072',
+      address: 'Barangay Tenan, Ipil, Zamboanga Sibugay',
+      logo: require('../../assets/images/gth_hospital_nobg.png'),
     },
     {
       name: 'ZAMSURECO',
-      number: '+63 917-987-6543',
+      number: '+63 935-283-0948',
       address: 'ZAMSURECO I Office, Ipil, Zamboanga Sibugay',
       logo: require('../../assets/images/zamsureco_logo.jpg'),
     },
+    {
+      name: 'LDRRMC Ipil',
+      number: '+63 931-713-7638',
+      address: 'LDRRMC Office, Ipil, Zamboanga Sibugay',
+      logo: require('../../assets/images/ldrrmc_logo.jpg')
+    }
   ];
+
+  // Handle copy to clipboard
+  const copyToClipboard = async (number: string) => {
+    await Clipboard.setStringAsync(number);
+    Alert.alert("Copied!", `Phone number ${number} copied to clipboard.`);
+  };
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
@@ -70,14 +83,20 @@ export default function EmergencyScreen() {
         <Text style={styles.title}>Emergency Contacts</Text>
 
         {contacts.map((contact, index) => (
-          <View key={index} style={styles.card}>
+          <TouchableOpacity
+            key={index}
+            style={styles.card}
+            activeOpacity={0.8}
+            onPress={() => Linking.openURL(`tel:${contact.number}`)}
+            onLongPress={() => copyToClipboard(contact.number)}
+          >
             <Image source={contact.logo} style={styles.logo} />
             <View>
               <Text style={styles.label}>{contact.name}</Text>
               <Text style={styles.number}>{contact.number}</Text>
               <Text style={styles.address}>{contact.address}</Text>
             </View>
-          </View>
+          </TouchableOpacity>
         ))}
 
         <Text style={styles.disclaimer}>
