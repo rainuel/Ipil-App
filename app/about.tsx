@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
-import { Linking, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, UIManager, View } from 'react-native';
+import { Linking, Platform, StyleSheet, Text, TouchableOpacity, UIManager, View } from 'react-native';
 import Header from '../components/Header';
 import Menu from '../components/Menu';
 
@@ -23,13 +23,8 @@ export default function AboutScreen() {
       {/* Drawer Menu */}
       {showDrawer && <Menu onClose={() => setShowDrawer(false)} />}
 
-      {/* CONTENT */}
-      <ScrollView contentContainerStyle={styles.content}>
         {/* Hero Card */}
         <View style={styles.heroCard}>
-          <View style={styles.heroIconWrap}>
-            <Ionicons name="bus-outline" size={28} color="#fff" />
-          </View>
           <Text style={styles.appName}>Ipil Today!</Text>
           <Text style={styles.tagline}>Getting around made simple.</Text>
           <View style={styles.metaRow}>
@@ -96,7 +91,6 @@ export default function AboutScreen() {
 
         <Text style={styles.smallNote}>Developed by PUNDEMONIUM.Co</Text>
         <Text style={styles.smallNote}>© 2025 Ipil Today. All rights reserved.</Text>
-      </ScrollView>
     </View>
   );
 }

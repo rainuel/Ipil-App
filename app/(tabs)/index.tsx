@@ -146,7 +146,7 @@ export default function HomeScreen() {
                   : latestNews.title}
               </Text>
               <Pressable onPress={() => router.push('/news')}>
-                <Text style={styles.link}>Read more →</Text>
+                <Text style={styles.link}>Read more</Text>
               </Pressable>
             </>
           ) : (

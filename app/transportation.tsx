@@ -95,6 +95,8 @@ export default function BusScreen() {
           <Ionicons name="home-outline" size={20} color="white" />
           <Text style={styles.homeButtonText}>Home</Text>
         </TouchableOpacity>
+         <Text style={styles.smallNote}>Developed by PUNDEMONIUM.Co</Text>
+                  <Text style={styles.smallNote}>© 2025 Ipil Today. All rights reserved.</Text>
       </View>
     </View>
   );
@@ -153,4 +155,5 @@ const styles = StyleSheet.create({
     marginLeft: 8,
     fontSize: 16,
   },
+    smallNote: { textAlign: 'center', color: '#6c757d', marginTop: 16, fontSize: 12 },
 });
