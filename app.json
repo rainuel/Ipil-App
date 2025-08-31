@@ -2,8 +2,8 @@
   "expo": {
     "name": "Ipil Today!",
     "slug": "Ipil-Application",
-    "runtimeVersion": "1.0.1",
-    "version": "1.0.0.2",
+    "runtimeVersion": "1.0.4",
+    "version": "1.0.4",
     "orientation": "portrait",
     "icon": "./assets/images/IPIL_INITIAL_LOGO.png",
     "scheme": "ipil-application",
