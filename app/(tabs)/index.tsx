@@ -13,41 +13,85 @@ import {
 } from 'react-native';
 import Header from '../../components/Header';
 import Menu from '../../components/Menu';
+import { Event, supabase } from '../../lib/supabase';
 
+// Types
 type Article = {
   title: string;
   link: string;
   description: string;
 };
 
+// Reusable Card Component
+function Card({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <View style={styles.card}>
+      <Text style={styles.cardTitle}>{title}</Text>
+      {children}
+    </View>
+  );
+}
+
 export default function HomeScreen() {
   const router = useRouter();
   const [showDrawer, setShowDrawer] = useState(false);
   const [latestNews, setLatestNews] = useState<Article | null>(null);
+  const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
+  const [eventsLoading, setEventsLoading] = useState(true);
 
   // Animation refs
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(30)).current;
 
-  useEffect(() => {
-    const fetchLatestNews = async () => {
-      try {
-        const res = await fetch(
-          `https://newsdata.io/api/1/news?apikey=pub_1e16d02618b6447cb50130b4294126f6&country=ph&language=en&q=abs-cbn`
-        );
-        const data = await res.json();
-        if (data.results && data.results.length > 0) {
-          setLatestNews(data.results[0]);
-        }
-      } catch (err) {
-        console.error('Error fetching latest news:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
+  // Fetch events from Supabase
+  const fetchEvents = async () => {
+    try {
+      setEventsLoading(true);
 
+      const today = new Date();
+      today.setHours(0, 0, 0, 0); // midnight
+      const todayIso = today.toISOString();
+
+      const { data, error } = await supabase
+        .from('events')
+        .select('*')
+        .gte('event_date', todayIso) // works with date or timestamp
+        .order('event_date', { ascending: true })
+        .limit(6);
+
+      if (error) {
+        console.error('❌ Error fetching events:', error);
+      } else {
+        setEvents(data || []);
+      }
+    } catch (err) {
+      console.error('❌ Error fetching events:', err);
+    } finally {
+      setEventsLoading(false);
+    }
+  };
+
+  // Fetch latest news
+  const fetchLatestNews = async () => {
+    try {
+      const res = await fetch(
+        `https://newsdata.io/api/1/news?apikey=pub_1e16d02618b6447cb50130b4294126f6&country=ph&language=en&q=abs-cbn`
+      );
+      const data = await res.json();
+      if (data.results && data.results.length > 0) {
+        setLatestNews(data.results[0]);
+      }
+    } catch (err) {
+      console.error('Error fetching latest news:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchLatestNews();
+    fetchEvents();
 
     // Fade and slide animation for the whole content
     Animated.parallel([
@@ -66,6 +110,15 @@ export default function HomeScreen() {
     ]).start();
   }, []);
 
+  // Format date for display
+  const formatEventDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+    });
+  };
+
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       {/* HEADER */}
@@ -82,8 +135,7 @@ export default function HomeScreen() {
         ]}
       >
         {/* LATEST NATIONAL NEWS */}
-        <View style={styles.card}>
-          <Text style={styles.cardTitle}>📰 Latest National News</Text>
+        <Card title="📰 Latest National News">
           {loading ? (
             <ActivityIndicator size="small" color="#1976d2" />
           ) : latestNews ? (
@@ -100,44 +152,28 @@ export default function HomeScreen() {
           ) : (
             <Text style={styles.cardContent}>No news available.</Text>
           )}
-        </View>
+        </Card>
 
         {/* UPCOMING EVENTS */}
-        <View style={styles.card}>
-          <Text style={styles.cardTitle}>📅 Upcoming Events</Text>
-          <View style={styles.eventItem}>
-            <Text style={styles.eventBullet}>•</Text>
-            <Text style={styles.cardContent}>Arrival of Germany – Sept 3</Text>
-          </View>
-          <View style={styles.eventItem}>
-            <Text style={styles.eventBullet}>•</Text>
-            <Text style={styles.cardContent}>Departure for Dumaguete – Sept 13-15</Text>
-          </View>
-          <View style={styles.eventItem}>
-            <Text style={styles.eventBullet}>•</Text>
-            <Text style={styles.cardContent}>Barangay Cleanup Drive – Sept 20</Text>
-          </View>
-          <View style={styles.eventItem}>
-            <Text style={styles.eventBullet}>•</Text>
-            <Text style={styles.cardContent}>Barangay Cleanup Drive – Sept 20</Text>
-          </View>
-          <View style={styles.eventItem}>
-            <Text style={styles.eventBullet}>•</Text>
-            <Text style={styles.cardContent}>Barangay Cleanup Drive – Sept 20</Text>
-          </View>
-          <View style={styles.eventItem}>
-            <Text style={styles.eventBullet}>•</Text>
-            <Text style={styles.cardContent}>Barangay Cleanup Drive – Sept 20</Text>
-          </View>
-          <View style={styles.eventItem}>
-            <Text style={styles.eventBullet}>•</Text>
-            <Text style={styles.cardContent}>Barangay Cleanup Drive – Sept 20</Text>
-          </View>
-          <View style={styles.eventItem}>
-            <Text style={styles.eventBullet}>•</Text>
-            <Text style={styles.cardContent}>Barangay Cleanup Drive – Sept 20</Text>
-          </View>
-        </View>
+        <Card title="📅 Upcoming Events">
+          {eventsLoading ? (
+            <ActivityIndicator size="small" color="#1976d2" />
+          ) : events.length > 0 ? (
+            events.map((event) => (
+              <View key={event.id} style={styles.eventItem}>
+                <Text style={styles.eventBullet}>•</Text>
+                <View style={styles.eventContent}>
+                  <Text style={styles.eventTitle}>{event.title}</Text>
+                  <Text style={styles.eventDate}>
+                    {formatEventDate(event.event_date)}
+                  </Text>
+                </View>
+              </View>
+            ))
+          ) : (
+            <Text style={styles.cardContent}>No upcoming events.</Text>
+          )}
+        </Card>
 
         {/* EXPLORE SECTION */}
         <View style={styles.sectionHeader}>
@@ -156,7 +192,7 @@ export default function HomeScreen() {
             <Pressable
               key={index}
               style={styles.exploreCard}
-              onPress={() => router.push('/explore')}
+              onPress={() => router.push('/explore')} // ✅ fixed
             >
               <Image
                 source={item.image}
@@ -172,6 +208,7 @@ export default function HomeScreen() {
   );
 }
 
+// Explore items
 const exploreItems = [
   {
     title: 'Provincial Capitol',
@@ -187,6 +224,7 @@ const exploreItems = [
   },
 ];
 
+// Styles
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -255,12 +293,27 @@ const styles = StyleSheet.create({
   },
   eventItem: {
     flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 4,
+    alignItems: 'flex-start',
+    marginBottom: 8,
   },
   eventBullet: {
     color: '#1976d2',
     fontSize: 18,
     marginRight: 6,
+    marginTop: 2,
+  },
+  eventContent: {
+    flex: 1,
+  },
+  eventTitle: {
+    fontSize: 15,
+    color: '#444',
+    fontWeight: '500',
+  },
+  eventDate: {
+    fontSize: 13,
+    color: '#1976d2',
+    fontWeight: '600',
+    marginTop: 2,
   },
 });
