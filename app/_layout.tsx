@@ -1,12 +1,13 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Drawer } from 'expo-router/drawer';
 
+
 export default function RootLayout() {
   return (
     <Drawer
       screenOptions={{
         headerShown: false,
-        swipeEnabled: false, // 👈 disables swipe-to-open drawer
+        swipeEnabled: false,
         drawerActiveTintColor: 'tomato',
         drawerInactiveTintColor: 'gray',
         drawerLabelStyle: { fontSize: 16 },

@@ -29,31 +29,31 @@ export default function EmergencyScreen() {
   const contacts = [
     {
       name: 'Police Department',
-      number: '+63 977-849-0091',
+      number: '0977-849-0091',
       address: 'Ipil Police Station, Ipil, Zamboanga Sibugay',
       logo: require('../../assets/images/police_logo.png'),
     },
     {
       name: 'Ipil Municipal Fire Station',
-      number: '+63 953-839-5673',
+      number: '0953-839-5673',
       address: 'Ipil Fire Station, Ipil, Zamboanga Sibugay',
       logo: require('../../assets/images/bfp_logo.png'),
     },
     {
       name: 'GTH Medical Center',
-      number: '+63 965-427-7072',
+      number: '0965-427-7072',
       address: 'Barangay Tenan, Ipil, Zamboanga Sibugay',
       logo: require('../../assets/images/gth_hospital_nobg.png'),
     },
     {
       name: 'ZAMSURECO',
-      number: '+63 935-283-0948',
+      number: '0935-283-0948',
       address: 'ZAMSURECO I Office, Ipil, Zamboanga Sibugay',
       logo: require('../../assets/images/zamsureco_logo.jpg'),
     },
     {
       name: 'LDRRMC Ipil',
-      number: '+63 931-713-7638',
+      number: '0931-713-7638',
       address: 'LDRRMC Office, Ipil, Zamboanga Sibugay',
       logo: require('../../assets/images/ldrrmc_logo.jpg')
     }

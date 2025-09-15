@@ -34,6 +34,9 @@ export default function ExploreScreen() {
       {showDrawer && <Menu onClose={() => setShowDrawer(false)} />}
 
       {/* MAIN CONTENT */}
+
+      {/*LET'S ADD A BIT MORE THINGS TO EXPLORE, BUT I HAVE TO DECIDE WHETHER TO HARDCODE IT HERE OR GET 
+      IT FROM THE INTERNET (WHICH WOULD REQUIRE INTERNET TO ACCESS DUH) */}
       <Animated.View
         style={[
           styles.mainContent,
@@ -57,6 +60,8 @@ export default function ExploreScreen() {
             grounds that highlight the province's cultural heritage.
           </Text>
         </View>
+
+        {/* In the future, I want to redirect it to a website when you press it. Therefore we have to make a website alongside this applicaiton.*/}
 
         {/* Rotunda Obelisk */}
         <View style={styles.card}>

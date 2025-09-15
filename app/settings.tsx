@@ -36,7 +36,7 @@ export default function SettingsScreen() {
             <Ionicons name="home-outline" size={20} color="white" />
             <Text style={styles.homeButtonText}>Home</Text>
           </TouchableOpacity>
-          <Text style={styles.smallNote}>Developed by PUNDEMONIUM.Co</Text>
+          <Text style={styles.smallNote}>Developed by the PUNDEMONIUM Team</Text>
           <Text style={styles.smallNote}>© 2025 Ipil Today. All rights reserved.</Text>
       </View>
     </SafeAreaView>

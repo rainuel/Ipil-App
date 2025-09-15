@@ -5,12 +5,12 @@ export default function Layout() {
   return (
     <Tabs
       screenOptions={({ route }) => ({
-        headerShown: false, // hides "(tabs)" title at top
+        headerShown: false, // hides "(tabs)" title at top (if not placed, tabs will be shown on the top and bottom part of the screen.)
         tabBarIcon: ({ color, size }) => {
           let iconName: keyof typeof Ionicons.glyphMap = "ellipse-outline";
 
           if (route.name === "index") {
-            iconName = "home-outline";
+            iconName = "home-outline"; //index is our home page/ landing.
           } else if (route.name === "news") {
             iconName = "newspaper-outline";
           } else if (route.name === "emergency") {

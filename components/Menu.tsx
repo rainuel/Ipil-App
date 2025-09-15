@@ -13,14 +13,14 @@ type MenuProps = {
   user?: User;
 };
 
-type MenuRoute = '/about' | '/settings' | '/transportation';
+type MenuRoute = '/about' | '/settings' | '/transportation' | '/appointment';
 
 export default function Menu({ onClose, onLogout, user }: MenuProps) {
   const router = useRouter();
 
   const displayUser: User = user || {
-    name: 'Jeco Berbs',
-    email: 'jecjec@example.com',
+    name: 'Example D. Luffy',
+    email: 'jeco@example.com',
     avatar: require('../assets/images/profile.png'),
   };
 
@@ -58,6 +58,10 @@ export default function Menu({ onClose, onLogout, user }: MenuProps) {
         <TouchableOpacity style={styles.item} onPress={() => navigateTo('/transportation')}>
           <Text style={styles.itemText}>Transportation</Text>
         </TouchableOpacity>
+
+        <TouchableOpacity style={styles.item} onPress={() => navigateTo('/appointment')}>
+          <Text style={styles.itemText}>Set Appointment</Text>
+        </TouchableOpacity>
       </View>
 
       {/* LOGOUT BUTTON AT BOTTOM */}
@@ -74,7 +78,7 @@ export default function Menu({ onClose, onLogout, user }: MenuProps) {
 const styles = StyleSheet.create({
   drawer: {
   position: 'absolute',
-  top: 20,       // adjust if you want some space below header
+  top: 20,       
   right: 0,
   width: 250,
   height: 500,   // fixed height

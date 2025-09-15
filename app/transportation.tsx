@@ -23,10 +23,11 @@ export default function BusScreen() {
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const router = useRouter();
 
+  // This is just a placeholder - I plan on putting it on a database for more flexible use.
   const busData = [
-    { id: '1', route: 'Zamboanga', arrival: '5 mins', departure: '10 mins', details: 'Air-conditioned • ₱250 fare • ETA 3hrs' },
-    { id: '2', route: 'Dipolog', arrival: '12 mins', departure: '15 mins', details: 'Regular • ₱180 fare • ETA 2.5hrs' },
-    { id: '3', route: 'Pagadian', arrival: '20 mins', departure: '25 mins', details: 'Deluxe • ₱220 fare • ETA 2hrs' },
+    { id: '1', route: 'Zamboanga', arrival: '5 mins', departure: '10 mins', details: 'Air-conditioned • ₱300 fare • ETA 3hrs' },
+    { id: '2', route: 'Dipolog', arrival: '12 mins', departure: '15 mins', details: 'Regular • ₱270 fare SP • ETA 2.5hrs' },
+    { id: '3', route: 'Pagadian', arrival: '20 mins', departure: '25 mins', details: 'Deluxe • ₱250 fare SP • ETA 2hrs' },
   ];
 
   const toggleExpand = (id: string) => {
@@ -95,7 +96,7 @@ export default function BusScreen() {
           <Ionicons name="home-outline" size={20} color="white" />
           <Text style={styles.homeButtonText}>Home</Text>
         </TouchableOpacity>
-         <Text style={styles.smallNote}>Developed by PUNDEMONIUM.Co</Text>
+         <Text style={styles.smallNote}>Developed by the PUNDEMONIUM Team</Text>
                   <Text style={styles.smallNote}>© 2025 Ipil Today. All rights reserved.</Text>
       </View>
     </View>

@@ -56,7 +56,7 @@ export default function NewsScreen() {
       <Header onDrawerPress={() => setShowDrawer(true)} />
 
       {/* DRAWER */}
-      {showDrawer && (
+      {showDrawer && ( // WHY IS THIS REPEATED??
         <Menu
           onClose={() => setShowDrawer(false)}
           onLogout={() => setShowDrawer(false)}
@@ -66,7 +66,7 @@ export default function NewsScreen() {
             avatar: require('../../assets/images/profile.png'),
           }}
         />
-      )}
+       )} 
 
       {/* MAIN CONTENT */}
       <Animated.View

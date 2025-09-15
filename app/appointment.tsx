@@ -20,6 +20,7 @@ export default function AboutScreen() {
   );
 }
 
+// have the css here in the same page because everything is too much if I put every css on its dedicated file.
 const styles = StyleSheet.create({
   container: {
     flex: 1,

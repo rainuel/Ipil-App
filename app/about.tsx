@@ -89,7 +89,7 @@ export default function AboutScreen() {
           </TouchableOpacity>
         </View>
 
-        <Text style={styles.smallNote}>Developed by PUNDEMONIUM.Co</Text>
+        <Text style={styles.smallNote}>Developed by the PUNDEMONIUM Team</Text>
         <Text style={styles.smallNote}>© 2025 Ipil Today. All rights reserved.</Text>
     </View>
   );

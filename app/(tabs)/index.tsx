@@ -125,7 +125,7 @@ export default function HomeScreen() {
       <Header onDrawerPress={() => setShowDrawer(true)} />
 
       {/* Drawer Menu */}
-      {showDrawer && <Menu onClose={() => setShowDrawer(false)} />}
+      {showDrawer && <Menu onClose={() => setShowDrawer(false)} />} 
 
       {/* MAIN CONTENT */}
       <Animated.View
@@ -155,8 +155,8 @@ export default function HomeScreen() {
         </Card>
 
         {/* UPCOMING EVENTS */}
-        <Card title="📅 Upcoming Events">
-          {eventsLoading ? (
+        <Card title="📅 Upcoming Events"> 
+          {eventsLoading ? ( //Make or use another image for the 'Upcoming Events' Logo.
             <ActivityIndicator size="small" color="#1976d2" />
           ) : events.length > 0 ? (
             events.map((event) => (
