@@ -179,7 +179,7 @@ export default function HomeScreen() {
         <View style={styles.sectionHeader}>
           <Text style={styles.cardTitle}>🌏 Explore</Text>
           <Pressable onPress={() => router.push('/explore')}>
-            <Text style={styles.link}>See all →</Text>
+            <Text style={styles.link}>See all</Text>
           </Pressable>
         </View>
 
@@ -219,8 +219,12 @@ const exploreItems = [
     image: require('../../assets/images/rotunda.jpg'),
   },
   {
-    title: 'Local Delicacies',
-    image: { uri: 'https://via.placeholder.com/300' },
+    title: 'Buluan Island',
+    image: { uri: 'https://rainuel.github.io/ipil-community-hub/Assets/buluan2.jpg' },
+  },
+  {
+    title: 'View More',
+    image: { uri: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn-icons-png.flaticon.com%2F512%2F10110%2F10110226.png&f=1&nofb=1&ipt=96da4d39afc2ad15bd76f1537b87039225949e2d56d1ce408ee375803cd0939a' },
   },
 ];
 

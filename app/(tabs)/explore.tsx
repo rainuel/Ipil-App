@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Animated, Image, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Animated, Image, Linking, Pressable, ScrollView, StyleSheet, Text } from 'react-native';
 import Header from '../../components/Header';
 import Menu from '../../components/Menu';
 
@@ -45,36 +45,70 @@ export default function ExploreScreen() {
       >
         <Text style={styles.title}>Explore Ipil</Text>
 
-        {/* Provincial Capitol */}
-        <View style={styles.card}>
+
+        <Pressable
+        onPress={() => 
+          Linking.openURL("https://rainuel.github.io/ipil-community-hub/explorePages/capitolIpil.html")
+        }
+        style={styles.card}
+        >
           <Image
             source={require('../../assets/images/capitol.jpg')}
             style={styles.image}
-          />
-          <Text style={styles.cardTitle}>
+            />
+            <Text style={styles.cardTitle}>
             Zamboanga Sibugay Provincial Capitol
           </Text>
+
           <Text style={styles.cardContent}>
             The Zamboanga Sibugay Capitol combines modern and traditional Filipino
             architecture, with a symmetrical façade, gable roofs, and landscaped
             grounds that highlight the province's cultural heritage.
           </Text>
-        </View>
+        </Pressable>
 
-        {/* In the future, I want to redirect it to a website when you press it. Therefore we have to make a website alongside this applicaiton.*/}
-
-        {/* Rotunda Obelisk */}
-        <View style={styles.card}>
+        <Pressable
+        onPress={() => 
+          Linking.openURL("https://rainuel.github.io/ipil-community-hub/explorePages/exploreRotunda.html")
+        }
+        style={styles.card}
+        >
           <Image
             source={require('../../assets/images/rotunda.jpg')}
             style={styles.image}
-          />
-          <Text style={styles.cardTitle}>Ipil Rotunda Obelisk</Text>
+            />
+            <Text style={styles.cardTitle}>
+            Ipil Rotunda Obelisk
+          </Text>
+
           <Text style={styles.cardContent}>
             A symbolic landmark of Zamboanga Sibugay, the Rotunda Obelisk stands
             as a tribute to the province’s history, unity, and cultural identity.
           </Text>
-        </View>
+        </Pressable>
+
+        <Pressable
+        onPress={() => 
+          Linking.openURL("https://rainuel.github.io/ipil-community-hub/explorePages/buluanIsland.html")
+        }
+        style={styles.card}
+        >
+          <Image
+            source={{ uri: 'https://rainuel.github.io/ipil-community-hub/Assets/buluan2.jpg' }}
+            style={styles.image}
+            />
+            <Text style={styles.cardTitle}>
+            Buluan Island
+          </Text>
+
+          <Text style={styles.cardContent}>
+            Buluan Island's brief history: It emerged as a developing coastal destination after
+            Zamobanga Sibugay's formation in 2001, built up as a protected, low-traffic beach
+            site known for its white sands and tranquil shores.
+          </Text>
+        </Pressable>
+
+        {/* In the future, I want to redirect it to a website when you press it. Therefore we have to make a website alongside this applicaiton.*/}
       </Animated.View>
     </ScrollView>
   );
